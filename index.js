@@ -1,7 +1,18 @@
 #!/home/pauron/.nvm/versions/node/v12.16.2/bin/node
 const https = require('https');
+const http = require('http');
 const fs = require('fs');
 const acrcloud = require('./acrcloud.js');
+
+const server = http.createServer((request, response) => {
+  response.writeHead(200, {"Content-Type": "text/html"});
+  response.end('Habemus Webapp <a href="https://twitter.com/suenaradio3"> SuenaRadio3 </a>');
+});
+
+const port = process.env.PORT || 1337;
+server.listen(port);
+
+console.log("Server running at http://localhost:%d", port);
 
 const link = 'https://radio3.rtveradio.cires21.com/radio3_hc.mp3';
 const duration = 15;
