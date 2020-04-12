@@ -46,7 +46,9 @@ const getStream = (link, filename, duration) => {
           if (err) console.log(err);
         });
         let track = JSON.parse(body);
-        playing = track['metadata']['music'][0]['title'] + ' - ' + track['metadata']['music'][0]['artists'][0]['name'];
+        if (track['status']['msg'] == 'Success') {
+          playing = track['metadata']['music'][0]['title'] + ' - ' + track['metadata']['music'][0]['artists'][0]['name'];
+        }
         console.log( playing );
 
       });
