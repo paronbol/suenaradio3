@@ -3,10 +3,13 @@ const https = require('https');
 const http = require('http');
 const fs = require('fs');
 const acrcloud = require('./acrcloud.js');
+let playing = "Malamente - ROSALIA";
 
 const server = http.createServer((request, response) => {
   response.writeHead(200, {"Content-Type": "text/html"});
-  response.end('Habemus Webapp <a href="https://twitter.com/suenaradio3"> SuenaRadio3 </a>');
+  response.end('<h1>POC Webapp <a href="https://twitter.com/suenaradio3"> SuenaRadio3 </a></h1><br>\
+  <h2>'+ playing +'</h2><br>\
+  ');
 });
 
 const port = process.env.PORT || 1337;
@@ -42,6 +45,10 @@ const getStream = (link, filename, duration) => {
         fs.writeFile('data/' + filename + '.json', body, (err) => {
           if (err) console.log(err);
         });
+        let track = JSON.parse(body);
+        playing = track['metadata']['music'][0]['title'] + ' - ' + track['metadata']['music'][0]['artists'][0]['name'];
+        console.log( playing );
+
       });
       console.log(filename);
     }, duration * 1000);
@@ -52,5 +59,5 @@ const getStream = (link, filename, duration) => {
 setInterval(() => {
   const time = new Date();
   const filename = time.getFullYear().toString() + time.getMonth().toString() + time.getDate().toString() + time.getHours().toString() + time.getMinutes().toString() + time.getSeconds().toString();
-  getStream(link,  filename , duration);
+  getStream(link, filename , duration);
 }, interval * 1000);
