@@ -107,4 +107,4 @@ dist
 audio/*.mp3
 
 # Data Files
-audio/*.json
+data/*.json
