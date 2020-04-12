@@ -1,0 +1,14 @@
+{
+  "name": "suenaradio3",
+  "version": "1.0.0",
+  "description": "From a mp3 stream cuts and gets the song ID",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Pau Ronda Bolta",
+  "license": "MIT",
+  "dependencies": {
+    "request": "^2.88.2"
+  }
+}
