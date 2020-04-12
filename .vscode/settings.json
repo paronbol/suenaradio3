@@ -1,0 +1,8 @@
+{
+  "appService.zipIgnorePattern": [
+    "node_modules{,/**}",
+    ".vscode{,/**}"
+  ],
+  "appService.defaultWebAppToDeploy": "/subscriptions/349f9d31-4eb1-4091-b8eb-644dffc83854/resourceGroups/suenaradio3/providers/Microsoft.Web/sites/suenaradio3",
+  "appService.deploySubpath": ""
+}
