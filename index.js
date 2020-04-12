@@ -36,6 +36,14 @@ const getStream = (link, filename, duration) => {
       res.resume();
       res.unpipe();
       file.end();
+      var bitmap = fs.readFileSync('audio/' + filename + '.mp3');
+      acrcloud.identify(Buffer.from(bitmap), acrcloudOptions, function (err, httpResponse, body) {
+        if (err) console.log(err);
+        fs.writeFile('data/' + filename + '.json', body, (err) => {
+          if (err) console.log(err);
+        });
+      });
+      console.log(filename);
     }, duration * 1000);
   });
 };
@@ -45,12 +53,4 @@ setInterval(() => {
   const time = new Date();
   const filename = time.getFullYear().toString() + time.getMonth().toString() + time.getDate().toString() + time.getHours().toString() + time.getMinutes().toString() + time.getSeconds().toString();
   getStream(link, 'audio/' + filename + '.mp3', duration);
-  var bitmap = fs.readFileSync('audio/' + filename + '.mp3');
-  acrcloud.identify(Buffer.from(bitmap), acrcloudOptions, function (err, httpResponse, body) {
-    if (err) console.log(err);
-    fs.writeFile('data/' + filename + '.json', body, (err) => {
-      if (err) console.log(err);
-    });
-  });
-  console.log(filename);
 }, interval * 1000);
