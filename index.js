@@ -28,7 +28,7 @@ const acrcloudOptions = {
 };
 
 const getStream = (link, filename, duration) => {
-  const file = fs.createWriteStream(filename);
+  const file = fs.createWriteStream('audio/' + filename + '.mp3');
   const request = https.get(link , res => {
     res.pipe(file);
     setTimeout(() => {
@@ -52,5 +52,5 @@ const getStream = (link, filename, duration) => {
 setInterval(() => {
   const time = new Date();
   const filename = time.getFullYear().toString() + time.getMonth().toString() + time.getDate().toString() + time.getHours().toString() + time.getMinutes().toString() + time.getSeconds().toString();
-  getStream(link, 'audio/' + filename + '.mp3', duration);
+  getStream(link,  filename , duration);
 }, interval * 1000);
