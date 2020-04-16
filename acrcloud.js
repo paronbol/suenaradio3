@@ -36,7 +36,7 @@ function identify(data, options, cb) {
     sample_bytes:data.length,
     timestamp:timestamp,
   }
-
+  // TODO: Try to avoid request and use http native module
   request.post({
     url: "http://"+options.host + options.endpoint,
     method: 'POST',
