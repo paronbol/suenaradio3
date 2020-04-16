@@ -46,7 +46,8 @@ const getStream = (link, filename, duration) => {
           if (err) console.log(err);
         });
         let track = JSON.parse(body);
-        // TODO: Only save song if correctly identified and once time 
+        // TODO: Only save song if correctly identified and once time
+        // TODO: Remove .mp3
         // TODO: Implement MongoDB connection
         if (track['status']['msg'] == 'Success') {
           playing = track['metadata']['music'][0]['title'] + ' - ' + track['metadata']['music'][0]['artists'][0]['name'];
