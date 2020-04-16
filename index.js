@@ -46,20 +46,22 @@ const getStream = (link, filename, duration) => {
           if (err) console.log(err);
         });
         let track = JSON.parse(body);
+        // TODO: Only save song if correctly identified and once time 
+        // TODO: Implement MongoDB connection
         if (track['status']['msg'] == 'Success') {
           playing = track['metadata']['music'][0]['title'] + ' - ' + track['metadata']['music'][0]['artists'][0]['name'];
         }
         console.log( playing );
-
       });
       console.log(filename);
     }, duration * 1000);
   });
 };
 
-
 setInterval(() => {
   const time = new Date();
   const filename = time.getFullYear().toString() + time.getMonth().toString() + time.getDate().toString() + time.getHours().toString() + time.getMinutes().toString() + time.getSeconds().toString();
   getStream(link, filename , duration);
 }, interval * 1000);
+// TODO: Implement Twitter support
+// TODO: Implement Small GUI 
