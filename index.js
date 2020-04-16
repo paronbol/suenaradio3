@@ -46,6 +46,7 @@ const getStream = (link, filename, duration) => {
           if (err) console.log(err);
         });
         let track = JSON.parse(body);
+        // TODO: Fix char encoding
         // TODO: Only save song if correctly identified and once time
         // TODO: Remove .mp3
         // TODO: Implement MongoDB connection
