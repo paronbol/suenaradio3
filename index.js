@@ -1,4 +1,3 @@
-#!/home/pauron/.nvm/versions/node/v12.16.2/bin/node
 const https = require('https');
 const http = require('http');
 const fs = require('fs');
@@ -26,8 +25,8 @@ server.listen(port);
 console.log("Server running at http://localhost:%d", port);
 
 const link = 'https://radio3.rtveradio.cires21.com/radio3_hc.mp3';
-const duration = 15;
-const interval = 120;
+const duration = parseInt(process.env.duration);
+const interval = parseInt(process.env.interval);
 const acrcloudOptions = {
   host: 'eu-west-1.api.acrcloud.com',
   endpoint: '/v1/identify',
@@ -50,19 +49,22 @@ const getStream = (link, filename, duration) => {
       var bitmap = fs.readFileSync('audio/' + filename + '.mp3');
       acrcloud.identify(Buffer.from(bitmap), acrcloudOptions, function (err, httpResponse, body) {
         if (err) console.log(err);
-        fs.writeFile('data/' + filename + '.json', body, (err) => {
-          if (err) console.log(err);
-        });
         let track = JSON.parse(body);
-        // TODO: Only save song if correctly identified and once time
-        // TODO: Remove .mp3
         // TODO: Implement MongoDB connection
-        if (track['status']['msg'] == 'Success') {
-          playing = track['metadata']['music'][0]['title'] + ' - ' + track['metadata']['music'][0]['artists'][0]['name'];
+        if (track['status']['msg'] === 'Success') {
+          if (playing !== track['metadata']['music'][0]['title'] + ' - ' + track['metadata']['music'][0]['artists'][0]['name']) {
+            playing = track['metadata']['music'][0]['title'] + ' - ' + track['metadata']['music'][0]['artists'][0]['name'];
+            fs.writeFile('data/' + filename + '.json', body, (err) => {
+              if (err) console.log(err);
+            });
+          }
         }
         console.log( playing );
       });
       console.log(filename);
+      fs.unlink('audio/' + filename + '.mp3', (err) => {
+        if (err) throw err;
+      });
     }, duration * 1000);
   });
 };
@@ -73,4 +75,4 @@ setInterval(() => {
   getStream(link, filename , duration);
 }, interval * 1000);
 // TODO: Implement Twitter support
-// TODO: Implement Small GUI 
+// TODO: Implement Small GUI
