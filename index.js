@@ -50,7 +50,6 @@ const getStream = (link, filename, duration) => {
       acrcloud.identify(Buffer.from(bitmap), acrcloudOptions, function (err, httpResponse, body) {
         if (err) console.log(err);
         let track = JSON.parse(body);
-        // TODO: Implement MongoDB connection
         console.log(body);
         if (track['status']['msg'] === 'Success') {
           if (playing !== track['metadata']['music'][0]['title'] + ' - ' + track['metadata']['music'][0]['artists'][0]['name']) {
@@ -76,3 +75,4 @@ setInterval(() => {
 }, interval * 1000);
 // TODO: Implement Twitter support
 // TODO: Implement Small GUI
+// TODO: Implement MongoDB connection
