@@ -51,17 +51,17 @@ const getStream = (link, filename, duration) => {
         if (err) console.log(err);
         let track = JSON.parse(body);
         // TODO: Implement MongoDB connection
+        console.log(body);
         if (track['status']['msg'] === 'Success') {
           if (playing !== track['metadata']['music'][0]['title'] + ' - ' + track['metadata']['music'][0]['artists'][0]['name']) {
             playing = track['metadata']['music'][0]['title'] + ' - ' + track['metadata']['music'][0]['artists'][0]['name'];
+            console.log( playing );
             fs.writeFile('data/' + filename + '.json', body, (err) => {
               if (err) console.log(err);
             });
           }
         }
-        console.log( playing );
       });
-      console.log(filename);
       fs.unlink('audio/' + filename + '.mp3', (err) => {
         if (err) throw err;
       });
