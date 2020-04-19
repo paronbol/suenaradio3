@@ -34,8 +34,8 @@ const acrcloudOptions = {
   signature_version: '1',
   data_type:'audio',
   secure: true,
-  access_key: 'cb9c1dccad129302acefe08270477dda',
-  access_secret: 'Ewh37dNhGsJRP2nYnNaFprmD4pMnBHP2y1DalNyc'
+  access_key: process.env.CUSTOMCONNSTR_acr_access_key,
+  access_secret: process.env.CUSTOMCONNSTR_acr_access_secret
 };
 
 const getStream = (link, filename, duration) => {
