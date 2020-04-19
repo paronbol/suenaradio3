@@ -7,9 +7,17 @@ let playing = "Malamente - ROSALIA";
 
 const server = http.createServer((request, response) => {
   response.writeHead(200, {"Content-Type": "text/html"});
-  response.end('<h1>POC Webapp <a href="https://twitter.com/suenaradio3"> SuenaRadio3 </a></h1><br>\
-  <h2>'+ playing +'</h2><br>\
-  ');
+  response.end('<!DOCTYPE html>\
+    <html lang="es">\
+    <head>\
+    <meta charset="UTF-8">\
+    <title>Suena Radio3</title>\
+    </head>\
+    <body>\
+    <h1>POC Webapp <a href="https://twitter.com/suenaradio3"> SuenaRadio3 </a></h1><br>\
+    <h2>'+ playing +'</h2><br>\
+    </body>\
+    </html>');
 });
 
 const port = process.env.PORT || 1337;
@@ -46,7 +54,6 @@ const getStream = (link, filename, duration) => {
           if (err) console.log(err);
         });
         let track = JSON.parse(body);
-        // TODO: Fix char encoding
         // TODO: Only save song if correctly identified and once time
         // TODO: Remove .mp3
         // TODO: Implement MongoDB connection
