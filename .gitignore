@@ -108,3 +108,6 @@ audio/*.mp3
 
 # Data Files
 data/*.json
+
+# Environment Variables
+environmentvar.sh

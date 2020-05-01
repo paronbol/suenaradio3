@@ -2,6 +2,8 @@ const https = require('https');
 const http = require('http');
 const fs = require('fs');
 const acrcloud = require('./acrcloud.js');
+const twit = require('twit')
+
 let playing = "Malamente - ROSALIA";
 
 const server = http.createServer((request, response) => {
@@ -27,6 +29,7 @@ console.log("Server running at http://localhost:%d", port);
 const link = 'https://radio3.rtveradio.cires21.com/radio3_hc.mp3';
 const duration = parseInt(process.env.duration);
 const interval = parseInt(process.env.interval);
+
 const acrcloudOptions = {
   host: 'eu-west-1.api.acrcloud.com',
   endpoint: '/v1/identify',
@@ -36,6 +39,14 @@ const acrcloudOptions = {
   access_key: process.env.CUSTOMCONNSTR_acr_access_key,
   access_secret: process.env.CUSTOMCONNSTR_acr_access_secret
 };
+const twitter = new twit({
+  consumer_key:         process.env.CUSTOMCONNSTR_twitter_consumer_key,
+  consumer_secret:      process.env.CUSTOMCONNSTR_twitter_consumer_secret,
+  access_token:         process.env.CUSTOMCONNSTR_twitter_access_token,
+  access_token_secret:  process.env.CUSTOMCONNSTR_twitter_access_token_secret,
+  timeout_ms:           60*1000,  // optional HTTP request timeout to apply to all requests.
+  strictSSL:            true,     // optional - requires SSL certificates to be valid.
+})
 
 const getStream = (link, filename, duration) => {
   const file = fs.createWriteStream('audio/' + filename + '.mp3');
@@ -55,6 +66,9 @@ const getStream = (link, filename, duration) => {
           if (playing !== track['metadata']['music'][0]['title'] + ' - ' + track['metadata']['music'][0]['artists'][0]['name']) {
             playing = track['metadata']['music'][0]['title'] + ' - ' + track['metadata']['music'][0]['artists'][0]['name'];
             console.log( playing );
+            twitter.post('statuses/update', { status: 'Ahora mismo suena en @radio3_rne : '+playing }, function(err, data, response) {
+              console.log(data)
+            })
             fs.writeFile('data/' + filename + '.json', body, (err) => {
               if (err) console.log(err);
             });
@@ -73,6 +87,5 @@ setInterval(() => {
   const filename = time.getFullYear().toString() + time.getMonth().toString() + time.getDate().toString() + time.getHours().toString() + time.getMinutes().toString() + time.getSeconds().toString();
   getStream(link, filename , duration);
 }, interval * 1000);
-// TODO: Implement Twitter support
 // TODO: Implement Small GUI
 // TODO: Implement MongoDB connection
