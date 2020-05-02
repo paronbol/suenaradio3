@@ -84,7 +84,7 @@ const getStream = (link, filename, duration) => {
 
 setInterval(() => {
   const time = new Date();
-  const filename = time.getFullYear().toString() + time.getMonth().toString() + time.getDate().toString() + time.getHours().toString() + time.getMinutes().toString() + time.getSeconds().toString();
+  const filename = time.getUTCFullYear().toString() + ("0" + (time.getUTCMonth()+ 1) ).slice(-2) + ("0" + time.getUTCDate() ).slice(-2) + ("0" + time.getUTCHours() ).slice(-2) + ("0" + time.getUTCMinutes() ).slice(-2) + ("0" + time.getUTCSeconds() ).slice(-2);
   getStream(link, filename , duration);
 }, interval * 1000);
 // TODO: Implement Small GUI
