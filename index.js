@@ -70,6 +70,12 @@ const getStream = (link, filename, duration) => {
             if ('youtube' in track['metadata']['music'][0]['external_metadata']) {
               tweet += ' https://youtu.be/' + track['metadata']['music'][0]['external_metadata']['youtube']['vid'];
             }
+            if ('spotify' in track['metadata']['music'][0]['external_metadata']) {
+              tweet += ' https://open.spotify.com/track/' + track['metadata']['music'][0]['external_metadata']['spotify']['track']['id'];
+            }
+            if ('musicbrainz' in track['metadata']['music'][0]['external_metadata']) {
+              tweet += ' https://musicbrainz.org/recording/' + track['metadata']['music'][0]['external_metadata']['musicbrainz'][0]['track']['id'];
+            }
             twitter.post('statuses/update', { status: tweet }, function(err, data, response) {
               console.log(data)
             })
