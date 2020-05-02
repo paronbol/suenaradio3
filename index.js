@@ -66,7 +66,11 @@ const getStream = (link, filename, duration) => {
           if (playing !== track['metadata']['music'][0]['title'] + ' - ' + track['metadata']['music'][0]['artists'][0]['name']) {
             playing = track['metadata']['music'][0]['title'] + ' - ' + track['metadata']['music'][0]['artists'][0]['name'];
             console.log( playing );
-            twitter.post('statuses/update', { status: 'Ahora mismo suena en @radio3_rne : '+playing }, function(err, data, response) {
+            let tweet = 'Ahora mismo suena en @radio3_rne : ' + playing;
+            if ('youtube' in track['metadata']['music'][0]['external_metadata']) {
+              tweet += ' https://youtu.be/' + track['metadata']['music'][0]['external_metadata']['youtube']['vid'];
+            }
+            twitter.post('statuses/update', { status: tweet }, function(err, data, response) {
               console.log(data)
             })
             fs.writeFile('data/' + filename + '.json', body, (err) => {
