@@ -66,7 +66,8 @@ const getStream = (link, filename, duration) => {
           if (playing !== track['metadata']['music'][0]['title'] + ' - ' + track['metadata']['music'][0]['artists'][0]['name']) {
             playing = track['metadata']['music'][0]['title'] + ' - ' + track['metadata']['music'][0]['artists'][0]['name'];
             console.log( playing );
-            let tweet = 'Ahora mismo suena en @radio3_rne : ' + playing;
+            let d = new Date();
+            let tweet = d.toLocaleString('es-ES', { timeZone: 'Europe/Madrid' }) + ' suena en @radio3_rne : ' + playing;
             if ('youtube' in track['metadata']['music'][0]['external_metadata']) {
               tweet += ' https://youtu.be/' + track['metadata']['music'][0]['external_metadata']['youtube']['vid'];
             }
